@@ -6,11 +6,14 @@ using UnityEngine;
 public class ScoreHandler : MonoBehaviour
 {
     private ScoreManager _scoreManager;
+    private movement _movement;
     public TMP_Text ScoreUI;
+
     
     void Start()
     {
         _scoreManager = FindObjectOfType<ScoreManager>();
+        _movement = FindAnyObjectByType<movement>();
         ScoreUI = GetComponent<TMP_Text>();
     }
     void Update()
@@ -27,8 +30,11 @@ public class ScoreHandler : MonoBehaviour
             return;
         }
             
-                
-        ScoreUI.text = "Score: " + _scoreManager.Score.ToString();
-        //Debug.Log("Score printed");
+        if (_movement.gameStarted == true)
+        {
+            ScoreUI.text = "Score : " + _scoreManager.Score.ToString();
+            //Debug.Log("Score printed");
+        }
+
     }
 }

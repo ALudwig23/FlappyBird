@@ -7,7 +7,7 @@ public class Score : MonoBehaviour
     public int scoreAmount = 1;
     private ScoreManager _scoreManager;
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         _scoreManager = FindAnyObjectByType<ScoreManager>();

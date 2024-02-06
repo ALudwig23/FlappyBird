@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class movement : MonoBehaviour
 {
-    public float upwardsForce = 200f;
+    public float upwardsForce = 300f;
+    public bool gameStarted = false;
+    public GameObject SFX;
     private Rigidbody2D _rigidbody2d;
     private Collider2D _collider2d;
-
+    
 
     // Start is called before the first frame update
     void Start()
@@ -16,19 +18,37 @@ public class movement : MonoBehaviour
         _collider2d = GetComponent<Collider2D>();
     }
 
-    // Update is called once per frame
+    private void FixedUpdate()
+    {
+        if (gameStarted == false)
+        {
+            if (_rigidbody2d.position.y < 0)
+            {
+                _rigidbody2d.velocity = Vector2.zero;
+                _rigidbody2d.AddForce(Vector2.up * upwardsForce);
+            }
+        }
+        
+    }
+
+    
     void Update()
     {
-        if (_rigidbody2d == null )
+        if (gameStarted == true)
         {
-            Debug.Log("RigidBody2D missing.");
-            return;
+            if (_rigidbody2d == null)
+            {
+                Debug.Log("RigidBody2D missing.");
+                return;
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                _rigidbody2d.velocity = Vector2.zero;
+                _rigidbody2d.AddForce(Vector2.up * upwardsForce);
+                GameObject.Instantiate(SFX, transform.position, transform.rotation);
+            }
+            //Debug.Log("Flaps upwards");
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _rigidbody2d.velocity = Vector2.zero;
-            _rigidbody2d.AddForce(Vector2.up * upwardsForce); //0,1
-        }
-        //Debug.Log("Flaps upwards");
+
     }
 }

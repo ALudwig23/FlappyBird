@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Score : MonoBehaviour
 {
-    public int scoreAmount = 10;
+    public int scoreAmount = 1;
     private ScoreManager _scoreManager;
 
     // Start is called before the first frame update
@@ -13,13 +13,19 @@ public class Score : MonoBehaviour
         _scoreManager = FindAnyObjectByType<ScoreManager>();
     }
 
-    // Update is called once per frame
+    
     void OnTriggerEnter2D(Collider2D col)
     {
         if (_scoreManager == null)
         {
             return;
         }
-        Debug.Log("Score added by " + scoreAmount);
+
+        if (!col.gameObject.CompareTag("Player"))
+        {
+            return;
+        }
+        _scoreManager.AddScore(scoreAmount);
+        //Debug.Log("Score added by " + scoreAmount);
     }
 }
